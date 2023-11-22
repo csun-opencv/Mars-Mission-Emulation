@@ -1,0 +1,20 @@
+item {
+  id: 1
+  name: 'red_cone'
+}
+
+item {
+  id: 2
+  name: 'yellow_cone'
+}
+
+item {
+  id: 3
+  name: 'green_cone'
+}
+
+item {
+  id: 4
+  name: 'robot'
+}
+
