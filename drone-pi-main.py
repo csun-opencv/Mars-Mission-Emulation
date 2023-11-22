@@ -73,6 +73,14 @@ class VideoStream:
 	# Indicate that the camera and thread should be stopped
         self.stopped = True
 
+# Define colors
+red = (0, 0, 255)
+yellow = (0, 255, 255)
+green = (0, 255, 0)
+white = (255, 255, 255)
+black = (0, 0, 0)
+cyan = (255, 255, 0)
+
 # Define window size
 WINDOW_WIDTH = 600
 WINDOW_HEIGHT = 600
@@ -203,6 +211,11 @@ while True:
 
         # If all elements in the array are below the threshold, skip
         if all(score < min_conf_threshold for score in scores):
+            # Default values outside of the frame to indicate that nothing was detected
+            red_center = (width + 100, height + 100)
+            yellow_center = (width + 100, height + 100)
+            green_center = (width + 100, height + 100)
+            robot_center = (width + 100, height + 100)
             continue
 
         if ((scores[i] > min_conf_threshold) and (scores[i] <= 1.0)):
@@ -218,24 +231,29 @@ while True:
             object_name = labels[int(classes[i])] # Look up object name from "labels" array using class index
 
             # Update flags after analyzing an element in the scores list
+            # Integer division is used for the line() function later
             if object_name == 'red_cone':
                 red_flag = True
+                red_center = ((xmin + xmax) // 2, (ymin + ymax) // 2)
             elif object_name == 'yellow_cone':
                 yellow_flag = True
+                yellow_center = ((xmin + xmax) // 2, (ymin + ymax) // 2)
             elif object_name == 'green_cone':
                 green_flag = True
+                green_center = ((xmin + xmax) // 2, (ymin + ymax) // 2)
             elif object_name == 'robot':
-                robot_flag = True                    
+                robot_flag = True   
+                robot_center = ((xmin + xmax) // 2, (ymin + ymax) // 2)                   
 
             if debug or pics:
-                cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), (10, 255, 0), 2)
+                cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), white, 2)
 
                 # Draw label
-                label = '%s: %d%%' % (object_name, int(scores[i]*100)) # Example: 'person: 72%'
+                label = '%s: %d%%' % (object_name, int(scores[i]*100)) # Example: 'red_cone: 72%'
                 labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2) # Get font size
                 label_ymin = max(ymin, labelSize[1] + 10) # Make sure not to draw label too close to top of window
-                cv2.rectangle(frame, (xmin, label_ymin-labelSize[1]-10), (xmin+labelSize[0], label_ymin+baseLine-10), (255, 255, 255), cv2.FILLED) # Draw white box to put label text in
-                cv2.putText(frame, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2) # Draw label text
+                cv2.rectangle(frame, (xmin, label_ymin-labelSize[1]-10), (xmin+labelSize[0], label_ymin+baseLine-10), white, cv2.FILLED) # Draw white box to put label text in
+                cv2.putText(frame, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, black, 2) # Draw label text
 
     # Send UART commands based on the flags each frame
     if robot_flag and green_flag:
@@ -265,7 +283,18 @@ while True:
         fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)
 
         # Draw framerate in corner of frame
-        cv2.putText(frame, 'FPS: {0:.2f}'.format(fps),(30,50), cv2.FONT_HERSHEY_SIMPLEX,1, (255,255,0), 2, cv2.LINE_AA)
+        cv2.putText(frame, 'FPS: {0:.2f}'.format(fps),(30,50), cv2.FONT_HERSHEY_SIMPLEX,1, cyan, 2, cv2.LINE_AA)
+
+        # Draw lines based on the flags each frame
+        if robot_flag and green_flag:
+            if (0 <= robot_center[0] <= width) and (0 <= robot_center[1] <= height) and (0 <= green_center[0] <= width) and (0 <= green_center[1] <= height):
+                cv2.line(frame, robot_center, green_center, green, 2)
+        elif robot_flag and yellow_flag:
+            if (0 <= robot_center[0] <= width) and (0 <= robot_center[1] <= height) and (0 <= yellow_center[0] <= width) and (0 <= yellow_center[1] <= height):
+                cv2.line(frame, robot_center, yellow_center, yellow, 2)
+        elif robot_flag and red_flag:
+            if (0 <= robot_center[0] <= width) and (0 <= robot_center[1] <= height) and (0 <= red_center[0] <= width) and (0 <= red_center[1] <= height):
+                cv2.line(frame, robot_center, red_center, red, 2)
 
         # If pics mode
         if pics:
