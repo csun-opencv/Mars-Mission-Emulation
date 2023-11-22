@@ -111,12 +111,12 @@ CWD_PATH = os.getcwd()
 # Path to .tflite file, which contains the model that is used for object detection
 # If using Edge TPU, assign filename for Edge TPU model
 if use_TPU:
-    PATH_TO_GRAPH = os.path.join(CWD_PATH, 'models', 'custom_quant_edge_model_lite_new', 'edgetpu.tflite')
+    PATH_TO_GRAPH = os.path.join(CWD_PATH, 'models', 'custom_model_lite_latest', 'edgetpu.tflite')
 else:
-    PATH_TO_GRAPH = os.path.join(CWD_PATH, 'models', 'custom_quant_edge_model_lite_new', 'detect_quant.tflite')
+    PATH_TO_GRAPH = os.path.join(CWD_PATH, 'models', 'custom_model_lite_latest', 'detect_quant.tflite')
 
 # Path to label map file
-PATH_TO_LABELS = os.path.join(CWD_PATH, 'models', 'custom_quant_edge_model_lite', 'labelmap.txt')
+PATH_TO_LABELS = os.path.join(CWD_PATH, 'models', 'custom_model_lite_latest', 'labelmap.txt')
 
 # Load the label map
 with open(PATH_TO_LABELS, 'r') as f:
