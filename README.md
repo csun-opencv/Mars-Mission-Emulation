@@ -1,6 +1,6 @@
 # Project Title
 
-Zynq-7000 SoC FPGA Projects 
+Mars Mission Emulation Project 
 
 ## Description
 
