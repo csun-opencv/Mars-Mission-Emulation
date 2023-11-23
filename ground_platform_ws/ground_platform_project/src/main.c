@@ -61,13 +61,18 @@ typedef enum Yellow_State yellow_state;
 // Declare a variable of type 'state'
 yellow_state yellow_curr_state = Y_STRAIGHT;
 
-enum Detection_State
+enum Drive_Mode
 {
     FOLLOW,
-    AVOID
+    AVOID,
+    TURN_LEFT,
+    TURN_RIGHT,
+    NO_TURN
 };
 
 uint16_t yellow_avoid_counter = 0;
+
+int8_t turn_flag = -1;
 
 // Declare global variables used to store filtered distance values from the Analog Distance Sensor
 uint32_t Filtered_Distance_Left;
@@ -97,7 +102,8 @@ int complete_flag = 0;
 
 void FSM(void);
 void Stop_WatchDog(void);
-void Action(uint8_t flag);
+void DetermineAction(uint8_t avoid_follow_flag);
+void Action(uint8_t avoid_follow_flag);
 void Green_Task();
 void Yellow_Task();
 void Red_Task();
@@ -167,13 +173,12 @@ int main(void)
 
     while(1){
         FSM();
-//        Listening(EUSCI_A2_UART_InChar());
-//        printf("%c\n", EUSCI_A2_UART_InChar());
 #ifdef DEBUG_ACTIVE
         printf("state: %d\r\n", curr_state);
         printf("yellow state: %d\r\n", yellow_curr_state);
+        printf("turn_flag: %d\r\n", turn_flag);
         printf("Left: %d mm | Center: %d mm | Right: %d mm\n", Converted_Distance_Left, Converted_Distance_Center, Converted_Distance_Right);
-        Clock_Delay1us(500);
+        Clock_Delay1ms(500);
 #endif
     }
 }
@@ -186,8 +191,8 @@ void FSM(void) {
             yellow_avoid_counter = 0;
             RGB_Output(RGB_LED_WHITE);
             Motor_Stop();
-//            Listening(EUSCI_A2_UART_InChar());
-            Listening('y');
+            Listening(EUSCI_A2_UART_InChar());
+//            Listening('y'); // Testing: Hard code any value: 'g', 'y', 'r', 'p', or anything else.
             break;
 
         case GREEN:
@@ -240,7 +245,6 @@ void Listening(uint8_t received_data){
 
     } else if  (received_data == 'p'){
         curr_state = IDLE;
-        Motor_Stop();
 
     } else {
         curr_state = IDLE;
@@ -268,10 +272,10 @@ void Yellow_Task() {
         }
         else
         {
-            Action(FOLLOW);
+            DetermineAction(FOLLOW);
         }
     } else if (yellow_curr_state == Y_AVOID) {
-        Action(AVOID);
+        DetermineAction(AVOID);
     }
 }
 
@@ -290,7 +294,27 @@ void Red_Task() {
     complete_flag = 1;
 }
 
-void Action(uint8_t flag) {
+void DetermineAction(uint8_t avoid_follow_flag) {
+    if ((Converted_Distance_Center < Converted_Distance_Left) || (Converted_Distance_Center < Converted_Distance_Right)) {
+        if(turn_flag == TURN_RIGHT) {
+#ifndef DEBUG_ACTIVE
+            Motor_Right(3000, 3000);
+#endif
+        } else if (turn_flag == TURN_LEFT){
+#ifndef DEBUG_ACTIVE
+            Motor_Left(3000, 3000);
+#endif
+        } else if (turn_flag == NO_TURN){
+#ifndef DEBUG_ACTIVE
+            Motor_Left(3000, 3000);
+#endif
+        }
+    } else  {
+        Action(avoid_follow_flag);
+    }
+}
+
+void Action(uint8_t avoid_follow_flag) {
 
     // Check if both the left and right distance sensor readings are greater than the desired distance
     if ((Converted_Distance_Left > DESIRED_DISTANCE) && (Converted_Distance_Right > DESIRED_DISTANCE))
@@ -314,14 +338,14 @@ void Action(uint8_t flag) {
         Error = Set_Point - Converted_Distance_Right;
     }
 
-    if (flag == FOLLOW) {
+    if (avoid_follow_flag == FOLLOW) {
         // Calculate the new duty cycle for the right motor based on the error and proportional constant (Kp)
         Duty_Cycle_Right = PWM_NOMINAL - (Kp * Error);
 
         // Calculate the new duty cycle for the left motor based on the error and proportional constant (Kp)
         Duty_Cycle_Left = PWM_NOMINAL + (Kp * Error);
 
-    } else if (flag == AVOID){
+    } else if (avoid_follow_flag == AVOID){
         // Calculate the new duty cycle for the right motor based on the error and proportional constant (Kp)
         Duty_Cycle_Right = PWM_NOMINAL + (Kp * Error);
 
@@ -347,9 +371,19 @@ void Action(uint8_t flag) {
 
 #ifndef DEBUG_ACTIVE
     // Apply the updated PWM duty cycle values to the motors
-
     Motor_Forward(Duty_Cycle_Left, Duty_Cycle_Right);
+
 #endif
+    // Determine previous turn
+    // Related to DetermineAction();
+    // Determines robots rotation
+    if (Duty_Cycle_Left > Duty_Cycle_Right) { // if right
+        turn_flag = TURN_RIGHT;
+    } else if (Duty_Cycle_Left < Duty_Cycle_Right) { // if left
+        turn_flag = TURN_LEFT;
+    } else {
+        turn_flag = NO_TURN;
+    }
 }
 
 void SysTick_Handler(void)
