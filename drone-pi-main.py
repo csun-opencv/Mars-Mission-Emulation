@@ -289,10 +289,10 @@ while True:
         if robot_flag and green_flag:
             if (0 <= robot_center[0] <= width) and (0 <= robot_center[1] <= height) and (0 <= green_center[0] <= width) and (0 <= green_center[1] <= height):
                 cv2.line(frame, robot_center, green_center, green, 2)
-        elif robot_flag and yellow_flag:
+        if robot_flag and yellow_flag:
             if (0 <= robot_center[0] <= width) and (0 <= robot_center[1] <= height) and (0 <= yellow_center[0] <= width) and (0 <= yellow_center[1] <= height):
                 cv2.line(frame, robot_center, yellow_center, yellow, 2)
-        elif robot_flag and red_flag:
+        if robot_flag and red_flag:
             if (0 <= robot_center[0] <= width) and (0 <= robot_center[1] <= height) and (0 <= red_center[0] <= width) and (0 <= red_center[1] <= height):
                 cv2.line(frame, robot_center, red_center, red, 2)
 
