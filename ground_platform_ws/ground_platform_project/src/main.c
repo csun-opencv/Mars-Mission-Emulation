@@ -25,6 +25,7 @@
 // Initialize constant distance values (in mm)
 #define TOO_CLOSE_DISTANCE_GREEN  150
 #define TOO_CLOSE_DISTANCE_YELLOW 300
+#define TOO_CLOSE_DISTANCE_RED 150
 #define DESIRED_DISTANCE    500
 
 // Initialize constant PWM duty cycle values for the motors
@@ -33,7 +34,7 @@
 #define PWM_MIN             (PWM_NOMINAL - PWM_SWING)
 #define PWM_MAX             (PWM_NOMINAL + PWM_SWING)
 
-// Declare an enum named 'State'
+// Mian FSM ------------------------------------------------
 enum State {
     IDLE,
     GREEN,
@@ -41,24 +42,16 @@ enum State {
     YELLOW,
     ERROR
 };
-
-// Use typedef to create a new type name 'state' for the 'enum State'
 typedef enum State state;
-
-// Declare a variable of type 'state'
 state  curr_state = IDLE;
 
-// Declare an enum named 'State'
+// Yellow state ---------------------------------------------
 enum Yellow_State
 {
     Y_STRAIGHT,
     Y_AVOID
 };
-
-// Use typedef to create a new type name 'state' for the 'enum State'
 typedef enum Yellow_State yellow_state;
-
-// Declare a variable of type 'state'
 yellow_state yellow_curr_state = Y_STRAIGHT;
 
 enum Drive_Mode
@@ -69,10 +62,19 @@ enum Drive_Mode
     TURN_RIGHT,
     NO_TURN
 };
-
 uint16_t yellow_avoid_counter = 0;
-
 int8_t turn_flag = -1;
+
+// Red state -------------------------------------------------
+enum Red_State
+{
+    R_STRAIGHT,
+    R_BACKWARDS,
+    R_FIGURE_8,
+    R_COMPLETE
+};
+typedef enum Red_State red_state;
+red_state red_curr_state = R_STRAIGHT;
 
 // Declare global variables used to store filtered distance values from the Analog Distance Sensor
 uint32_t Filtered_Distance_Left;
@@ -173,12 +175,15 @@ int main(void)
 
     while(1){
         FSM();
+//        printf("red state: %d\r\n", red_curr_state);
+//        printf("Left: %d mm | Center: %d mm | Right: %d mm\n", Converted_Distance_Left, Converted_Distance_Center, Converted_Distance_Right);
 #ifdef DEBUG_ACTIVE
         printf("state: %d\r\n", curr_state);
         printf("yellow state: %d\r\n", yellow_curr_state);
+        printf("red state: %d\r\n", red_curr_state);
         printf("turn_flag: %d\r\n", turn_flag);
         printf("Left: %d mm | Center: %d mm | Right: %d mm\n", Converted_Distance_Left, Converted_Distance_Center, Converted_Distance_Right);
-        Clock_Delay1ms(500);
+        Clock_Delay1ms(100);
 #endif
     }
 }
@@ -192,7 +197,7 @@ void FSM(void) {
             RGB_Output(RGB_LED_WHITE);
             Motor_Stop();
             Listening(EUSCI_A2_UART_InChar());
-//            Listening('y'); // Testing: Hard code any value: 'g', 'y', 'r', 'p', or anything else.
+//            Listening('r'); // Testing: Hard code any value: 'g', 'y', 'r', 'p', or anything else.
             break;
 
         case GREEN:
@@ -282,16 +287,70 @@ void Yellow_Task() {
 // Rotate in place
 void Red_Task() {
 
-    // Apply the updated PWM duty cycle values to the motors
+    switch (red_curr_state) {
+        case R_STRAIGHT:
+            if ((Converted_Distance_Left < TOO_CLOSE_DISTANCE_RED) || (Converted_Distance_Center < TOO_CLOSE_DISTANCE_RED) || (Converted_Distance_Right < TOO_CLOSE_DISTANCE_RED)) {
+                red_curr_state = R_BACKWARDS;
+            } else {
+                Action(FOLLOW);
+            }
+            break;
+
+        case R_BACKWARDS:
 #ifndef DEBUG_ACTIVE
-    Motor_Forward(5000, 3000);
+            Motor_Backward(4000,4000);
 #endif
-    Clock_Delay1ms(5000);
+            Clock_Delay1ms(5000);
 #ifndef DEBUG_ACTIVE
-    Motor_Forward(3000, 5000);
+            Motor_Stop();
 #endif
-    Clock_Delay1ms(5000);
-    complete_flag = 1;
+            Clock_Delay1ms(500);
+            red_curr_state = R_FIGURE_8;
+            break;
+
+        case R_FIGURE_8:
+    // rotate 90 degrees
+#ifndef DEBUG_ACTIVE
+            Motor_Left(3000, 3000);
+#endif
+
+            Clock_Delay1ms(700);
+
+    // semi circle
+#ifndef DEBUG_ACTIVE
+            Motor_Forward(5000, 3000);
+#endif
+
+            Clock_Delay1ms(2700);
+
+   // full circle
+#ifndef DEBUG_ACTIVE
+             Motor_Forward(3000, 5000);
+#endif
+//
+             Clock_Delay1ms(5600);
+//
+   // semi circle
+#ifndef DEBUG_ACTIVE
+             Motor_Forward(5000, 3000);
+#endif
+//
+             Clock_Delay1ms(2700);
+
+             // rotate 90 degrees
+         #ifndef DEBUG_ACTIVE
+                     Motor_Right(3000, 3000);
+         #endif
+
+                     Clock_Delay1ms(700);
+            red_curr_state = R_COMPLETE;
+            break;
+
+        case R_COMPLETE:
+            // complete flag
+            complete_flag = 1;
+            break;
+    }
 }
 
 void DetermineAction(uint8_t avoid_follow_flag) {
