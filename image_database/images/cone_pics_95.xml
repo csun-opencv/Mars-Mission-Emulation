@@ -1,0 +1,26 @@
+<annotation>
+	<folder>images</folder>
+	<filename>cone_pics_95.jpg</filename>
+	<path>/home/mg/Documents/csun/ece595r/ece595r-final-project/images/cone_pics_95.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>1280</width>
+		<height>720</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>yellow_cone</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>634</xmin>
+			<ymin>238</ymin>
+			<xmax>924</xmax>
+			<ymax>520</ymax>
+		</bndbox>
+	</object>
+</annotation>

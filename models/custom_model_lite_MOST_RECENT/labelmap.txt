@@ -1,4 +1,0 @@
-red_cone
-yellow_cone
-green_cone
-robot
