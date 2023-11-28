@@ -1,3 +1,14 @@
+/**
+ * @file main.c
+ * @brief Source code of the final demo. 
+ *
+ * This file contains the driver initializations as well the main state machine.
+ * The main state machine is always listening until an ASCII character is received.
+ * The state machine changes states: based on the received ASCII character, each character-specific task is executed.
+ *
+ * @author Michael Granberry, Abdullah Hendy
+ *
+ */
 
 #include <stdint.h>
 #include <math.h>
@@ -14,10 +25,6 @@
 #include "../inc/LPF.h"
 #include "../inc/Analog_Distance_Sensor.h"
 #include "../inc/SysTick_Interrupt.h"
-
-
-
-
 
 // Controller
 //#define DEBUG_ACTIVE    1
@@ -130,11 +137,9 @@ int main(void)
 
     // Initialize the 48 MHz Clock
     Clock_Init48MHz();
+
     // Initialize the built-in red LED
     LED1_Init();
-
-    // Initialize the front and back LEDs
-    P8_Init();
 
     // Init RGB
     RGB_Init();

@@ -27,7 +27,7 @@ An object detection drone wirelessly commanding a wheeled robot to perform tasks
 ### Software
 
 * On the Raspberry Pi side, the project was developed on Ubuntu 20.04 with Python 3.8.10
-    * [System Packages](x) and [pip packages](x) are included in the [dependencies/](x) directory.
+    * [System Packages](https://github.com/csun-opencv/Mars-Mission-Emulation/blob/main/dependencies/ubuntu_20_04_apt_packages.txt) and [pip packages](https://github.com/csun-opencv/Mars-Mission-Emulation/blob/main/dependencies/requirements_3_8_10.txt) are included in the [dependencies/](https://github.com/csun-opencv/Mars-Mission-Emulation/tree/main/dependencies) directory.
 * On the robot side, [Code Composer Studio](https://www.ti.com/tool/CCSTUDIO) was used to develop.
     * Inside Code Composer Studio, the project in the [ground_platform_ws/](https://github.com/csun-opencv/Mars-Mission-Emulation/tree/main/ground_platform_ws) directory can be imported as a CCS project.
 

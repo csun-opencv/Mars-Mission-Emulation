@@ -5,7 +5,7 @@
  * This file contains the function definitions for the SysTick_Interrupt driver.
  * It uses the SysTick timer to perform interrupt requests at the specified period.
  *
- * @author Aaron Nanas
+ * @author Aaron Nanas, Michael Granberry, Abdullah Hendy
  *
  */
 #ifndef SYSTICK_INTERRUPT_H_

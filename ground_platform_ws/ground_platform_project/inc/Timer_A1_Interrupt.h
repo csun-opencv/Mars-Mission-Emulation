@@ -5,9 +5,7 @@
  * This file contains the function definitions for the Timer_A1_Interrupt driver.
  * It uses the Timer_A1 timer to generate periodic interrupts at a specified rate.
  *
- * @note The interrupt rate has been modified to 2 kHz for the Tachometer / ADC Lab.
- *
- * @note The interrupt rate has been modified to 1 kHz for the I2C Lab.
+ * @note The interrupt rate has been modified to 2 kHz for the ADC.
  *
  * @author Aaron Nanas
  *
@@ -19,14 +17,10 @@
 #include <stdint.h>
 #include "msp.h"
 
-// Periodic interrupt rate of 10 Hz for the PWM Lab
-//#define TIMER_A1_INT_CCR0_VALUE 50000
 
-// Periodic interrupt rate of 2 kHz for the Tachometer / ADC Lab
+// Periodic interrupt rate of 2 kHz for the ADC
 #define TIMER_A1_INT_CCR0_VALUE 6000
 
-// Periodic interrupt rate of 1 kHz for the I2C Lab
-//#define TIMER_A1_INT_CCR0_VALUE 12000
 
 void (*Timer_A1_Task)(void);
 

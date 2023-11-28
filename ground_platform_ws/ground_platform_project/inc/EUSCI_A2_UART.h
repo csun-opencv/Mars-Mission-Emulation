@@ -6,12 +6,8 @@
  *
  * @note Assumes that the necessary pin configurations for UART communication have been performed
  *       on the corresponding pins. P3.2 is used for UART RX while P3.3 is used for UART TX.
- *       For this lab, only the P3.3 pin (UART TX) will be used to observe the transmitted data using an oscilloscope.
  *
- * For more information regarding the Enhanced Universal Serial Communication Interface (eUSCI),
- * refer to the MSP432Pxx Microcontrollers Technical Reference Manual
- *
- * @author Aaron Nanas, Michael Granberry, Abdullah Hendy
+ * @author Michael Granberry, Abdullah Hendy
  *
  */
 

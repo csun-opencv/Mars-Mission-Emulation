@@ -5,9 +5,7 @@
  * This file contains the function definitions for the Timer_A1_Interrupt driver.
  * It uses the Timer_A1 timer to generate periodic interrupts at a specified rate.
  *
- * @note The interrupt rate has been modified to 2 kHz for the Tachometer / ADC Lab.
- *
- * @note The interrupt rate has been modified to 1 kHz for the I2C Lab.
+ * @note The interrupt rate has been modified to 2 kHz for the ADC.
  *
  * @author Aaron Nanas
  *
