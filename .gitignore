@@ -3,3 +3,5 @@ __pycache__
 .metadata/
 dvt/
 RemoteSystemsTempFiles/
+.DS_Store
+recordings/.DS_Store

@@ -166,13 +166,23 @@ green_flag = False
 robot_flag = False
 
 if pics:
-    counter = 0
+    flight_folder_counter = 0
+    pics_counter = 0
     if not os.path.exists('recordings'):
         print("NO /recordings folder. Creating one...")
-        os.makedirs('recordings/')
+        os.makedirs('recordings')
     else:
-        print('/recordings folder exists. Cleaning it...')
-        os.system('rm -fR recordings/*')
+        print('/recordings folder already exists. No action.')
+
+    while True:
+        flight_folder = f'flight{flight_folder_counter:03d}'
+        if not os.path.exists(os.path.join('recordings', flight_folder)):
+            print(f"Creating {flight_folder} folder...")
+            os.makedirs(os.path.join('recordings', flight_folder))
+            break
+        else:
+            flight_folder_counter = flight_folder_counter + 1
+
 
 
 # For frame1 in camera.capture_continuous(rawCapture, format="bgr",use_video_port=True):
@@ -298,9 +308,9 @@ while True:
 
         # If pics mode
         if pics:
-            filename = f"recordings/pic_{counter}.jpg"
+            filename = os.path.join("recordings", flight_folder, f"pic_{pics_counter}.jpg")
             cv2.imwrite(filename, frame)
-            counter = counter + 1
+            pics_counter = pics_counter + 1
 
     if debug:
         # Display results on the frame
