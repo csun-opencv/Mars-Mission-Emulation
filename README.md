@@ -34,7 +34,7 @@ An object detection drone wirelessly commanding a wheeled robot to perform tasks
 
 ## Report
 
-* A full [report]() can be found in the [docs/]() directory where full project details are explained. 
+* A full [report](https://github.com/csun-opencv/Mars-Mission-Emulation/blob/main/docs/Fall23_Mars_Mission_Emulation_Framework_ECE_493_Senior_Paper.pdf) can be found in the [docs/](https://github.com/csun-opencv/Mars-Mission-Emulation/tree/main/docs) directory where full project details are explained. 
 
     
 ## Authors
