@@ -32,10 +32,10 @@ An object detection drone wirelessly commanding a wheeled robot to perform tasks
     * Inside Code Composer Studio, the project in the [ground_platform_ws/](https://github.com/csun-opencv/Mars-Mission-Emulation/tree/main/ground_platform_ws) directory can be imported as a CCS project.
 
 
-## Report
+## Documentation
 
 * A full [report](https://github.com/csun-opencv/Mars-Mission-Emulation/blob/main/docs/Fall23_Mars_Mission_Emulation_Framework_ECE_493_Senior_Paper.pdf) can be found in the [docs/](https://github.com/csun-opencv/Mars-Mission-Emulation/tree/main/docs) directory where full project details are explained. 
-
+* A PowerPoint [presentation](https://github.com/csun-opencv/Mars-Mission-Emulation/blob/main/media/Mars_Mission_Emulation_Presentation_Demo.pptx) covers the main points of the project.
     
 ## Authors
 
