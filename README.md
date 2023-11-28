@@ -13,7 +13,7 @@ An object detection drone wirelessly commanding a wheeled robot to perform tasks
 ### Hardware
 
 * [Hawk's Work F450](https://www.amazon.com/HAWKS-WORK-Controller-Unassembled-Quadcopter/dp/B09SZ7LNXB/ref=asc_df_B09SZ7LNXB/?tag=hyprod-20&linkCode=df0&hvadid=678719857173&hvpos=&hvnetw=g&hvrand=8287373968535265209&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9031153&hvtargid=pla-1931934789257&psc=1&mcid=8d5321886ba23dd8bc74ffec259c8b0c) is used as main drone platform projects.
-    * **NOTE: The Pixhawk provided in this kit is NOT an official Pixhawk from Holybro.**
+    * **NOTE: The Pixhawk provided in this kit is NOT an official Pixhawk from Holybro and therefore the default firmware should NEVER be changed.**
 * [Raspberry Pi 4 8GB](https://www.amazon.com/CanaKit-Raspberry-8GB-Starter-Kit/dp/B08956GVXN/ref=sr_1_4?keywords=raspberry+pi+4+8GB&qid=1701127316&sr=8-4&ufe=app_do%3Aamzn1.fos.304cacc1-b508-45fb-a37f-a2c47c48c32f) kit is used for the Raspberry Pi build.
 * [Raspberry Pi 4000mAh Battery](https://www.amazon.com/VGE-Battery-Raspberry-4000mAh-Adhesive/dp/B09BNRKQD8/ref=sr_1_4?crid=P2VNN1525M8C&keywords=raspberry+pi+external+battery&qid=1701130051&s=electronics&sprefix=raspberry+pi+extermal+battery%2Celectronics%2C136&sr=1-4)
 * [Google Coral](https://coral.ai/products/accelerator/)
