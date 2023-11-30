@@ -1,0 +1,82 @@
+(ExpressProject "Mars-Mission-Emulation-Schematics"
+  (ProjectVersion "19981106")
+  (SoftwareVersion "17.4-2022 S008-[11/28/23]")
+  (ProjectType "Analog or A/D Mixed Mode")
+  (Folder "Design Resources"
+    (Folder "Library")
+    (NoModify)
+    (File ".\mars-mission-emulation-schematics.dsn"
+      (Type "Schematic Design"))
+    (BuildFileAddedOrDeleted "x")
+    (CompileFileAddedOrDeleted "x")
+    (DOCKED "TRUE")
+    (DOCKING_POSITION "59420"))
+  (Folder "Layout")
+  (Folder "Outputs")
+  (Folder "Referenced Projects")
+  (MPSSessionName "admin")
+  (PartMRUSelector
+    (GND
+      (LibraryName "C:\CADENCE\SPB_17.2\TOOLS\CAPTURE\LIBRARY\CAPSYM.OLB")
+      (DeviceIndex "0"))
+    (LA_W57B-TYP
+      (FullPartName "LA_W57B-TYP.Normal")
+      (LibraryName
+         "C:\CADENCE\SPB_17.2\TOOLS\CAPTURE\LIBRARY\PSPICE\OSRAM_GOLDEN_DRAGON.OLB")
+      (DeviceIndex "0")))
+  (GlobalState
+    (FileView
+      (Path "Design Resources")
+      (Path "Design Resources"
+         "C:\Users\admin\Documents\CSUN\Mars-Mission-Emulation\schematics\pspice\mars-mission-emulation-schematics.dsn")
+      (Path "Design Resources"
+         "C:\Users\admin\Documents\CSUN\Mars-Mission-Emulation\schematics\pspice\mars-mission-emulation-schematics.dsn"
+         "SCHEMATIC1"))
+    (HierarchyView)
+    (Doc
+      (Type "COrCapturePMDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -1 -1 0 333 0 660"))
+      (Tab 0))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -31 52 1133 52 485")
+        (Scroll "-31 0")
+        (Zoom "100")
+        (Occurrence "/"))
+      (Path
+         "C:\USERS\ADMIN\DOCUMENTS\CSUN\MARS-MISSION-EMULATION\SCHEMATICS\PSPICE\MARS-MISSION-EMULATION-SCHEMATICS.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "aerial-platform"))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -31 78 1159 78 511")
+        (Scroll "-99 0")
+        (Zoom "86")
+        (Occurrence "/"))
+      (Path
+         "C:\USERS\ADMIN\DOCUMENTS\CSUN\MARS-MISSION-EMULATION\SCHEMATICS\PSPICE\MARS-MISSION-EMULATION-SCHEMATICS.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "ground-platform"))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 2 3 -1 -1 -8 -31 104 1148 104 541")
+        (Scroll "-100 49")
+        (Zoom "98")
+        (Occurrence "/"))
+      (Path
+         "C:\USERS\ADMIN\DOCUMENTS\CSUN\MARS-MISSION-EMULATION\SCHEMATICS\PSPICE\MARS-MISSION-EMULATION-SCHEMATICS.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "pixhawk")))
+  (Folder "PSpice Resources"
+    (Folder "Simulation Profiles")
+    (Folder "Model Libraries"
+      (Sort User))
+    (Folder "Stimulus Files"
+      (Sort User))
+    (Folder "Include Files"
+      (Sort User)))
+  (Folder "Logs"))
