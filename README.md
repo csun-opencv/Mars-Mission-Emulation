@@ -36,6 +36,7 @@ An object detection drone wirelessly commanding a wheeled robot to perform tasks
 
 * A full [report](https://github.com/csun-opencv/Mars-Mission-Emulation/blob/main/docs/Fall23_Mars_Mission_Emulation_Framework_ECE_493_Senior_Paper.pdf) can be found in the [docs/](https://github.com/csun-opencv/Mars-Mission-Emulation/tree/main/docs) directory where full project details are explained. 
 * A PowerPoint [presentation](https://github.com/csun-opencv/Mars-Mission-Emulation/blob/main/media/Mars_Mission_Emulation_Presentation_Demo.pptx) covers the main points of the project.
+* A simplified high-level [schematics](https://github.com/csun-opencv/Mars-Mission-Emulation/tree/main/schematics) of the major hardware used shows the main connections on each platform.
     
 ## Authors
 
